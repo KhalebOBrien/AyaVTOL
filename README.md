@@ -1,2 +1,2 @@
 # AyaVTOL
-The eVTOL Project - enabling mordern transportion
+The eVTOL Project - enabling modern transportion
