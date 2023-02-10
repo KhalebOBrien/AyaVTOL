@@ -89,7 +89,7 @@
                 if (data.user?._id) {
                     const saveToken = addToLocal('token', data.token)
                     const saveUser = addToLocal('user', JSON.stringify(data.user))
-                    location.assign('/workspace')
+                    location.assign('/dashboard')
                 }
                 if (data.error) {
                     errorDiv.classList.remove('d-none')
