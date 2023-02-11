@@ -7,6 +7,7 @@ export const db = () => {
     mongoose.connect(process.env.DB_URL, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
+      family: 4,
     });
 
     mongoose.connection.on('error', (err) => {
