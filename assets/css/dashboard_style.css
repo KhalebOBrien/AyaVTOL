@@ -377,9 +377,13 @@ nav.close ~ .dashboard .top {
   color: var(--text-color);
 }
 
-#vehicleList .workspace-item {
+#vehicleList .vehicle-item {
   background: var(--sidebar-color);
   transition: var(--tran-05);
+}
+.p-top {
+  border-top: 1px solid var(--text-color);
+  padding-top: 14px;
 }
 
 @media (max-width: 1000px) {

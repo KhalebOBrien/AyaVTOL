@@ -21,40 +21,19 @@
       <div class="mt-5 mb-5">
         <div class="title">
           <i class="uil uil-plane"></i>
-          <span class="text" id="vehicle-title">Manage eVTOLs</span>
+          <span class="text" id="vehicle-title">Manage eVTOL <%= vehicle.serial_number %></span>
         </div>
         <div class="float-end">
           <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
-              <i class="uil uil-apps"></i>
+            <button class="btn btn-secondary dropdown-toggle" data-bs-toggle="modal" data-bs-target="#addVehicleModal">
+              <i class="uil uil-edit"></i> Update eVTOL
             </button>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
-              <li>
-                <span class="dropdown-item" data-bs-toggle="modal" data-bs-target="#addVehicleModal"><i class="uil uil-add"></i> Register eVTOL</span>
-              </li>
-            </ul>
           </div>
         </div>
       </div>
 
       <div class="container">
         <div class="row g-3" id="vehicleList">
-          <% vehicles.forEach((vehicle) => { %>
-            <div class="col-4">
-              <div class="p-3 rounded-4 vehicle-item" style="background-color: <%= vehicle.color %>;">
-                <a href="/evtol/<%= vehicle._id %>">
-                  <div>
-                    <div class="text-center mb-4">
-                      <span class="vehicle-title"><%= vehicle.serial_number %></span>
-                    </div>
-                    <p class="text-ash p-top">Model: <%= vehicle.model %></p>
-                    <p class="text-ash p-top">Status: <%= vehicle.current_state %></p>
-                    <p class="text-ash p-top">Battery Capacity: <%= vehicle.battery_capacity %>%</p>
-                  </div>
-                </a>
-              </div>
-            </div>
-          <% }) %>
         </div>
       </div>
     </div>
