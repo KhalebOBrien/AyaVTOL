@@ -19,13 +19,16 @@ const vehicleSchema = new mongoose.Schema(
       enum: EVehicleState,
       default: EVehicleState.IDLE,
     },
-    weight: {
+    max_weight: {
       type: Number,
-      required: [true, 'Password is required.'],
+      default: 500
     },
     battery_capacity: {
       type: Number,
-      required: [true, 'Password is required.'],
+      default: 100
+    },
+    color: {
+      type: String,
     },
   },
   {

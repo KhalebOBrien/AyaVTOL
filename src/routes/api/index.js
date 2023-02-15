@@ -1,7 +1,9 @@
 import express from 'express'
-import { auth } from './v1/auth'
+import { authRoutes } from './v1/auth'
+import { vehicleRoutes } from './v1/vehicle'
 import { requiresAuth } from '../../middlewares/requireAuth'
 
 export const ApiRoutes = express.Router()
 
-ApiRoutes.use('/v1/auth', auth)
+ApiRoutes.use('/v1/auth', authRoutes)
+ApiRoutes.use('/v1/vehicle', requiresAuth, vehicleRoutes)

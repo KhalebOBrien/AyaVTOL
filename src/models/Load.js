@@ -1,30 +1,27 @@
 import mongoose from 'mongoose'
+import { ELoadType } from '../enums/ELoadType'
 
 const loadSchema = new mongoose.Schema(
   {
-    serial_number: {
+    name: {
       type: String,
       required: [true, 'Please enter serial number.'],
       unique: [true, 'Vehicle with this serial number already exists.'],
     },
-    model: {
+    load_type: {
       type: String,
-      enum: EVehicleModel,
-      required: [true, 'Please enter vehicle model.'],
+      enum: ELoadType,
+      required: [true, 'Please specify load type.'],
     },
-    current_state: {
-      type: String,
-      enum: EVehicleState,
-      default: EVehicleState.IDLE,
-    },
-    weight: {
+    code: {
       type: Number,
       required: [true, 'Password is required.'],
     },
-    battery_capacity: {
-      type: Number,
-      required: [true, 'Password is required.'],
-    },
+    images: [
+      {
+        type: String,
+      }
+    ],
   },
   {
     timestamps: {
