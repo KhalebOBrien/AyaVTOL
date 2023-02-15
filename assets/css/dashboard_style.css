@@ -40,6 +40,10 @@ body.dark {
   --title-icon-color: #ccc;
 }
 
+body.dark .vehicle-item {
+  background-color: #3a3b3c !important;
+}
+
 ::-webkit-scrollbar {
   width: 8px;
 }
@@ -107,6 +111,9 @@ nav .menu-items {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+.munt-items ul.nav-links, ul {
+  padding-left: 0rem !important;
 }
 .menu-items li {
   list-style: none;
@@ -356,6 +363,23 @@ nav.close ~ .dashboard .top {
   margin-top: 20px;
   white-space: nowrap;
   color: var(--text-color);
+}
+#vehicleList a{
+  text-decoration: none;
+}
+.vehicle-title {
+  font-size: 28px;
+  font-weight: 500;
+  color: var(--text-color);
+}
+
+.text-ash {
+  color: var(--text-color);
+}
+
+#vehicleList .workspace-item {
+  background: var(--sidebar-color);
+  transition: var(--tran-05);
 }
 
 @media (max-width: 1000px) {

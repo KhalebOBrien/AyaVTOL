@@ -30,3 +30,13 @@ sidebarToggle.addEventListener('click', () => {
     localStorage.setItem('status', 'open')
   }
 })
+
+const interceptResponseCode = (res) => {
+  if (res?.status == 401) {
+    alert(
+      'Your access to these system have expired. Please login again to regain access.',
+    )
+    clearLocal()
+    location.assign('/login')
+  }
+}

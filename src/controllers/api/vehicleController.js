@@ -1,4 +1,3 @@
-import { User } from '../../models/User'
 import { Vehicle } from '../../models/Vehicle'
 import { handleErrors } from '../../utils/errorHandler'
 import { StatusCodes } from 'http-status-codes'
@@ -9,7 +8,7 @@ export const createVehicle = async (req, res) => {
   try {
     const vehicleExists = await Vehicle.findOne({ serial_number: serial_number })
     if (vehicleExists) {
-      return res.status(StatusCodes.BAD_REQUEST).json({ error: { serial_number: 'Vehicle with this serial number already exists' }})
+      return res.status(StatusCodes.BAD_REQUEST).json({ error: { message: 'Vehicle with this serial number already exists' }})
     }
 
     const vehicle = await Vehicle.create({
@@ -47,7 +46,7 @@ export const updateVehicleDetail = async (req, res) => {
     )
     
     if (!updated) {
-      throw Error('vehicle not found')
+      return res.status(StatusCodes.NOT_FOUND).json({ error: { message: 'vehicle not found' }})
     }
 
     return res.status(StatusCodes.CREATED).json({ updated })
@@ -61,11 +60,25 @@ export const fetchVehicleById = async (req, res) => {
   try {
     const vehicle = await Vehicle.findOne({ _id: req.params.vehicleId })
     if (!vehicle) {
-      return res.status(StatusCodes.NOT_FOUND).json({ error: { messgae: 'vehicle not found' }})
+      return res.status(StatusCodes.NOT_FOUND).json({ error: { message: 'vehicle not found' }})
     }
 
     return res.status(StatusCodes.OK).json({ vehicle })
 
+  } catch (err) {
+    const error = handleErrors(err)
+    return res.status(StatusCodes.BAD_REQUEST).json({ error })
+  }
+}
+
+export const fetchAllVehicles = async (req, res) => {
+  try {
+    const vehicles = await Vehicle.find({})
+    if (!vehicles) {
+      return res.status(StatusCodes.NOT_FOUND).json({ error: 'vehicles not found' })
+    }
+
+    return res.status(StatusCodes.OK).json({ vehicles })
   } catch (err) {
     const error = handleErrors(err)
     return res.status(StatusCodes.BAD_REQUEST).json({ error })
