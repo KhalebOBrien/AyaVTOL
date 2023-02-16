@@ -19,7 +19,7 @@
 
     <div class="dash-content">
       <div class="mt-5 mb-5">
-        <div class="title">
+        <div class="tile">
           <i class="uil uil-plane"></i>
           <span class="text" id="vehicle-title">Manage eVTOL <%= vehicle.serial_number %></span>
         </div>
@@ -29,6 +29,18 @@
               <i class="uil uil-edit"></i> Update eVTOL
             </button>
           </div>
+        </div>
+      </div>
+      <div class="boxes">
+        <div class="box box1">
+          <i class="uil uil-plane-arrival"></i>
+          <span class="text">Total Deliveries</span>
+          <span class="number">233</span>
+        </div>
+        <div class="box box2">
+          <i class="uil uil-envelope-send"></i>
+          <span class="text">Total Orders</span>
+          <span class="number">242</span>
         </div>
       </div>
 
@@ -50,31 +62,31 @@
           <form class="needs-validation" id="createBoard">
             <div class="form-group mb-4">
               <label for="n_serial_number">Serial Number</label>
-              <input id="n_serial_number" type="text" maxlength="100" class="form-control form-control-lg" name="n_serial_number" tabindex="1" required autofocus>
+              <input id="n_serial_number" type="text" maxlength="100" value="<%= vehicle.serial_number %>" class="form-control form-control-lg" name="n_serial_number" tabindex="1" required autofocus>
               <div class="n_serial_number invalid-feedback"></div>
             </div>
             <div class="form-group mb-4">
               <label for="n_model">Model</label>
               <select name="n_model" id="n_model" class="form-control form-control-lg" tabindex="1" required>
                 <% Object.keys(models).map((model) => { %>
-                  <option value="<%= model.toLowerCase() %>"><%= model %></option>
+                  <option value="<%= model.toLowerCase() %>" <%= (vehicle.model.toUpperCase() == model) ? "selected" : "" %>><%= model %></option>
                 <% }) %>
               </select>
               <div class="n_model invalid-feedback"></div>
             </div>
             <div class="form-group mb-4">
               <label for="n_max_weight">Max Weight (gram)</label>
-              <input id="n_max_weight" type="number" max="500" min="0" class="form-control form-control-lg" name="n_max_weight" tabindex="1" required>
+              <input id="n_max_weight" type="number" max="500" min="0" value="<%= vehicle.max_weight %>" class="form-control form-control-lg" name="n_max_weight" tabindex="1" required>
               <div class="n_max_weight invalid-feedback"></div>
             </div>
             <div class="form-group mb-4">
               <label for="n_battery_capacity">Battery Capacity (%)</label>
-              <input id="n_battery_capacity" type="number" max="100" min="0" class="form-control form-control-lg" name="n_battery_capacity" tabindex="1" required>
+              <input id="n_battery_capacity" type="number" max="100" min="0" value="<%= vehicle.battery_capacity %>" class="form-control form-control-lg" name="n_battery_capacity" tabindex="1" required>
               <div class="n_battery_capacity invalid-feedback"></div>
             </div>
             <div class="form-group mb-4">
               <label for="n_color">Color</label>
-              <input id="n_color" type="color" class="form-control form-control-lg" name="n_color" tabindex="1" value="#a1becd">
+              <input id="n_color" type="color" class="form-control form-control-lg" name="n_color" value="<%= vehicle.color %>" tabindex="1" value="#a1becd">
               <div class="n_color invalid-feedback"></div>
             </div>
             <div class="nError bg-danger text-white p-2 text-center rounded mb-4 d-none"></div>
@@ -113,8 +125,8 @@
       })
 
       try {
-        const res = await fetch('/api/v1/vehicle', {
-          method: 'POST',
+        const res = await fetch('/api/v1/vehicle/<%= vehicle._id %>', {
+          method: 'PATCH',
           body: req_body,
           headers: { 
             'Content-Type':'application/json',
@@ -126,20 +138,7 @@
         const data = await res.json();
         console.log(data)
         if (data.vehicle?._id) {
-          let item = `<div class="col-4">
-                      <div class="p-3 rounded-4 vehicle-item" style="background-color: ${data.vehicle.color};">
-                        <a href="/evtol/${data.vehicle._id}">
-                          <div>
-                            <div class="text-center mb-4">
-                              <span class="vehicle-title">${data.vehicle.serial_number}</span>
-                            </div>
-                            <p class="text-ash p-top">Model: ${data.vehicle.model}</p>
-                            <p class="text-ash p-top">Status: ${data.vehicle.current_state}</p>
-                            <p class="text-ash p-top">Battery Capacity: ${data.vehicle.battery_capacity}%</p>
-                          </div>
-                        </a>
-                      </div>
-                    </div>`
+          let item = ``
           
           document.getElementById('vehicleList').innerHTML += item
 

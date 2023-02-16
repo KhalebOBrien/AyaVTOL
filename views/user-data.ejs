@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en"  data-bs-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link rel="stylesheet" href="/css/bootstrap5.3.min.css">
+  <link rel="stylesheet" href="/css/dashboard_style.css" />
+  <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" />
+
+  <title>User - <%= project_name %></title>
+</head>
+<body>
+  <%- include('./partials/__side_navbar.ejs') %>
+
+  <section class="dashboard">
+    <%- include('./partials/__topbar.ejs') %>
+
+    <div class="dash-content">
+      <div class="mt-5 mb-5">
+        <div class="tile">
+          <i class="uil uil-plane"></i>
+          <span class="text" id="vehicle-title">Manage User <%= user.serial_number %></span>
+        </div>
+        <div class="float-end">
+          <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" data-bs-toggle="modal" data-bs-target="#updateUserModal">
+              <i class="uil uil-edit"></i> Update User
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="boxes">
+        <div class="box box1">
+          <i class="uil uil-plane-arrival"></i>
+          <span class="text">Total Deliveries</span>
+          <span class="number">233</span>
+        </div>
+        <div class="box box2">
+          <i class="uil uil-envelope-send"></i>
+          <span class="text">Total Orders</span>
+          <span class="number">242</span>
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="row g-3" id="vehicleList">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script src="/js/bootstrap5.3.bundle.js"></script>
+  <script src="/js/app.js"></script>
+  <script src="/js/localStorage.js"></script>
+  <script>
+
+  </script>
+</body>
+</html>

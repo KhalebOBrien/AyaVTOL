@@ -34,6 +34,10 @@ const userSchema = new mongoose.Schema(
   },
 )
 
+userSchema.virtual('full_name').get(function () {
+  return this.first_name + ' ' + this.last_name;
+})
+
 userSchema.methods.toJSON = function () {
   var obj = this.toObject()
   delete obj.password

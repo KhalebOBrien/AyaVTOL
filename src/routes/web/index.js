@@ -1,6 +1,7 @@
 import express from 'express'
 import { registerView, loginView, forgotPasswordView, setNewPasswordView } from '../../controllers/web/authController'
 import { dashboardView, evtolsView, evtolView } from '../../controllers/web/dashboardController'
+import { usersView, userView } from '../../controllers/web/userController'
 import { validateResetLink } from '../../middlewares/validateResetLink'
 
 export const WebRoutes = express.Router()
@@ -16,5 +17,8 @@ WebRoutes.get('/set-new-password', validateResetLink, setNewPasswordView)
 
 WebRoutes.get('/dashboard', dashboardView)
 WebRoutes.get('/evtols', evtolsView)
-
 WebRoutes.get('/evtol/:vehicleId', evtolView)
+
+
+WebRoutes.get('/users', usersView)
+WebRoutes.get('/user/:userId', userView)
