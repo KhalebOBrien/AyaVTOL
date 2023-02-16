@@ -2,6 +2,7 @@ const body = document.querySelector('body'),
   modeToggle = body.querySelector('.mode-toggle')
 sidebar = body.querySelector('nav')
 sidebarToggle = body.querySelector('.sidebar-toggle')
+const logout = body.querySelector('#logout')
 
 let getMode = localStorage.getItem('mode')
 if (getMode && getMode === 'dark') {
@@ -29,6 +30,11 @@ sidebarToggle.addEventListener('click', () => {
   } else {
     localStorage.setItem('status', 'open')
   }
+})
+
+logout.addEventListener('click', () => {
+  clearLocal()
+  location.assign('/login')
 })
 
 const interceptResponseCode = (res) => {
