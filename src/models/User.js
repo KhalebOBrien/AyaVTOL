@@ -22,6 +22,10 @@ const userSchema = new mongoose.Schema(
     password_reset_token: {
       type: String,
     },
+    is_admin: {
+      type: Boolean,
+      default: false
+    },
   },
   {
     timestamps: {

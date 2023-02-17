@@ -21,26 +21,10 @@
     <div class="dash-content">
       <div class="mt-5 mb-5">
         <div class="title">
-          <i class="uil uil-plane"></i>
+          <i class="uil uil-user"></i>
           <span class="text" id="vehicle-title">Manage Users</span>
         </div>
       </div>
-
-        <!-- <div class="row g-3" id="vehicleList">
-          <% users.forEach((user) => { %>
-            <div class="col-4">
-              <div class="p-3 rounded-4 vehicle-item bg-white">
-                <a href="/users/<%= user._id %>">
-                  <div>
-                    <div class="text-center mb-4">
-                      <span class="vehicle-title"><%= user.first_name + " " + user.last_name %></span>
-                    </div>
-                  </div>
-                </a>
-              </div>
-            </div>
-          <% }) %>
-        </div> -->
       <div>
         <table id="activityTable">
           <thead>
@@ -48,7 +32,7 @@
               <th>Full Name</th>
               <th>Email</th>
               <th>No of Deliveries</th>
-              <th>Date</th>
+              <th>Type</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -58,7 +42,7 @@
                 <td><%= user.full_name %></td>
                 <td><%= user.email %></td>
                 <td></td>
-                <td></td>
+                <td><%= user.is_admin ? 'Admin' : 'User' %></td>
                 <td>
                   <span><i class="uil uil-user-times text-danger"></i></span>
                   <span><i class="uil uil-eye text-primary p-3"></i></span>

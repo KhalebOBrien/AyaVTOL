@@ -3,6 +3,10 @@ const body = document.querySelector('body'),
 sidebar = body.querySelector('nav')
 sidebarToggle = body.querySelector('.sidebar-toggle')
 const logout = body.querySelector('#logout')
+const addLoadBtn = document.getElementById('addLoadBtn')
+const cancelAddLoadBtn = document.getElementById('cancelAddLoadBtn')
+const newLoadFormDiv = document.getElementById('newLoadFormDiv')
+const loadsTableDiv = document.getElementById('loadsTableDiv')
 
 let getMode = localStorage.getItem('mode')
 if (getMode && getMode === 'dark') {
@@ -46,3 +50,17 @@ const interceptResponseCode = (res) => {
     location.assign('/login')
   }
 }
+
+addLoadBtn.addEventListener('click', (event) => {
+  newLoadFormDiv.classList.remove('d-none')
+  loadsTableDiv.classList.add('d-none')
+  addLoadBtn.classList.add('d-none')
+  cancelAddLoadBtn.classList.remove('d-none')
+})
+
+cancelAddLoadBtn.addEventListener('click', (event) => {
+  newLoadFormDiv.classList.add('d-none')
+  loadsTableDiv.classList.remove('d-none')
+  addLoadBtn.classList.remove('d-none')
+  cancelAddLoadBtn.classList.add('d-none')
+})

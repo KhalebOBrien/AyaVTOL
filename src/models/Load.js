@@ -5,8 +5,7 @@ const loadSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      required: [true, 'Please enter serial number.'],
-      unique: [true, 'Vehicle with this serial number already exists.'],
+      required: [true, 'Please enter name.'],
     },
     load_type: {
       type: String,
@@ -15,7 +14,10 @@ const loadSchema = new mongoose.Schema(
     },
     code: {
       type: Number,
-      required: [true, 'Password is required.'],
+      required: [true, 'Code is required'],
+    },
+    weight: {
+      type: Number,
     },
     images: [
       {

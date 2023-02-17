@@ -1,6 +1,6 @@
 import express from 'express'
 import { registerView, loginView, forgotPasswordView, setNewPasswordView } from '../../controllers/web/authController'
-import { dashboardView, evtolsView, evtolView } from '../../controllers/web/dashboardController'
+import { dashboardView, evtolsView, evtolView, loadEvtolView } from '../../controllers/web/dashboardController'
 import { usersView, userView } from '../../controllers/web/userController'
 import { validateResetLink } from '../../middlewares/validateResetLink'
 
@@ -18,6 +18,7 @@ WebRoutes.get('/set-new-password', validateResetLink, setNewPasswordView)
 WebRoutes.get('/dashboard', dashboardView)
 WebRoutes.get('/evtols', evtolsView)
 WebRoutes.get('/evtol/:vehicleId', evtolView)
+WebRoutes.get('/evtol/:vehicleId/load', loadEvtolView)
 
 
 WebRoutes.get('/users', usersView)

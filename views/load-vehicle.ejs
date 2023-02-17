@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en"  data-bs-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link rel="stylesheet" href="/css/bootstrap5.3.min.css">
+  <link rel="stylesheet" href="/css/dashboard_style.css" />
+  <link rel="stylesheet" href="/css/js_table_style.css" />
+  <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" />
+
+  <title>Manage eVTOLs - <%= project_name %></title>
+</head>
+<body>
+  <%- include('./partials/__side_navbar.ejs') %>
+
+  <section class="dashboard">
+    <%- include('./partials/__topbar.ejs') %>
+
+    <div class="dash-content">
+      <div class="mt-5 mb-5 d-block">
+        <div class="title d-inline">
+          <i class="uil uil-plane"></i>
+          <span class="text" id="vehicle-title">Manage eVTOL <%= vehicle.serial_number %></span>
+        </div>
+        <div class="float-end d-inline">
+          <a href="javascript:void(0)" class="btn btn-secondary" id="addLoadBtn">
+            <i class="uil uil-plus"></i> Add Load
+          </a>
+          <a href="javascript:void(0)" class="btn btn-secondary d-none" id="cancelAddLoadBtn">
+            <i class="uil uil-times"></i> Cancel
+          </a>
+        </div>
+      </div>
+
+      <div class="container text-ash mb-5 d-none" id="newLoadFormDiv" style="max-width: 90%;">
+        <div class="row g-3" id="vehicleList">
+          <form class="needs-validation" id="createBoard">
+            <div class="row">
+              <div class="form-group mb-4 col-md-6">
+                <label for="load_name">Name of Item</label>
+                <input id="load_name" type="text" maxlength="100" class="form-control form-control-lg" name="load_name" tabindex="1" required autofocus>
+                <small class="text-muted"><i>Only letters, numbers, -, _ are allowed.</i></small>
+              </div>
+              <div class="form-group mb-4 col-md-6">
+                <label for="unique_code">Unique Code</label>
+                <input id="unique_code" type="text" class="form-control form-control-lg" name="unique_code" tabindex="1" required>
+                <small class="text-muted"><i>This can be a serial number - something to uniquely identify this item. If not provided, the system will generate one for this item.</i></small>
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group mb-4 col-md-6">
+                <label for="load-type">Load Type</label>
+                <select name="load-type" id="load-type" class="form-control form-control-lg" tabindex="1" required>
+                  <% Object.keys(loadTypes).map((loadType) => { %>
+                    <option value="<%= loadType.toLowerCase() %>"><%= loadType %></option>
+                  <% }) %>
+                </select>
+              </div>
+              <div class="form-group mb-4 col-md-6">
+                <label for="net_weight">Item Net Weight (max of <span class="max_weight"><%= vehicle.max_weight %></span>gram)</label>
+                <input id="net_weight" type="number" max="100" min="0" class="form-control form-control-lg" name="net_weight" tabindex="1" required>
+                <small class="text-muted"><i>This is the total weight for this load.</i></small>
+              </div>
+            </div>
+            <div class="form-group mb-4">
+              <label for="load_images" class="form-label">Images</label>
+              <input class="form-control form-control-lg mb-3" type="file" id="load_images" accept="image/*" multiple required>
+              <div id="file-names" class="text-italics"></div>
+            </div>
+            <div class="nError bg-danger text-white p-2 text-center rounded mb-4 d-none"></div>
+            <div class="nSuccess bg-success text-white p-2 text-center rounded mb-4 d-none"></div>
+            <div class="form-group">
+              <button type="submit" class="btn btn-primary btn-lg btn-block" tabindex="4">Add</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div id="loadsTableDiv">
+        <table id="itemsTable">
+          <thead>
+            <tr>
+              <th>Images</th>
+              <th>Name of Item</th>
+              <th>Unique Code</th>
+              <th>Load Type</th>
+              <th>Item Net Weight</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- <tr>
+              <td>hhhsss</td>
+              <td>hasgfdhg</td>
+              <td>asfsdfsd</td>
+              <td>sadfdyufa</td>
+              <td>sadfdyufa</td>
+              <td>
+                <span><i class="uil uil-user-times text-danger"></i></span>
+                <span><i class="uil uil-eye text-primary p-3"></i></span>
+                <span><i class="uil uil-edit-alt text-success"></i></span>
+              </td>
+            </tr> -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <script src="/js/bootstrap5.3.bundle.js"></script>
+  <script src="/js/app.js"></script>
+  <script src="/js/localStorage.js"></script>
+  <script src="/js/js_table.min.js"></script>
+  <script>
+    const activityTable = new JSTable("#itemsTable", {
+      sortable: true,
+      searchable: false
+    });
+
+    const nameField = document.getElementById("load_name")
+    nameField.addEventListener("input", (event) => {
+      const regex = /^[a-zA-Z0-9-_]*$/
+      const value = nameField.value
+      if (!regex.test(value)) {
+        nameField.value = value.slice(0, -1)
+      }
+    });
+
+    const fileInput = document.getElementById("load_images")
+    const fileNamesDiv = document.getElementById("file-names")
+    fileInput.addEventListener("change", (event) => {
+      fileNamesDiv.innerHTML = ''
+      const fileList = fileInput.files
+      for (let i = 0; i < fileList.length; i++) {
+        const file = fileList[i];
+        const fileReader = new FileReader();
+        fileReader.readAsDataURL(file);
+        fileReader.onload = function() {
+          fileNamesDiv.innerHTML += `<div class="mt-4 mb-4">
+                                      <img src="${fileReader.result}" class="preview-image" />
+                                      <span class="text-ash">${file.name}</span>
+                                    </div>`
+        }
+      }
+    });
+
+    const form = document.querySelector('form')
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const errorDiv = document.querySelector('.nError')
+      const successDiv = document.querySelector('.nSuccess')
+      errorDiv.classList.add('d-none')
+      successDiv.classList.add('d-none')
+      
+      errorDiv.textContent = ''
+      successDiv.textContent = ''
+
+      const req_body = JSON.stringify({ 
+          serial_number: form.n_serial_number.value,
+          model: form.n_model.value,
+          max_weight: form.n_max_weight.value,
+          battery_capacity: form.n_battery_capacity.value,
+          color: form.n_color.value
+      })
+
+      try {
+        const res = await fetch('/api/v1/vehicle/<%= vehicle._id %>', {
+          method: 'PATCH',
+          body: req_body,
+          headers: { 
+            'Content-Type':'application/json',
+            'Authorization':`Bearer ${readFromLocal('token')}`
+          }
+        })
+        interceptResponseCode(res);
+
+        const data = await res.json();
+        console.log(data)
+        if (data.vehicle?._id) {
+          let item = ``
+          
+          document.getElementById('vehicleList').innerHTML += item
+
+          successDiv.classList.remove('d-none')
+          successDiv.textContent = `CREATED: ${data.vehicle.serial_number}`
+          setTimeout(() => {
+            successDiv.classList.add('d-none')
+          }, 2000);
+
+          form.n_serial_number.value = ''
+          form.n_model.value = ''
+          form.n_max_weight.value = ''
+          form.n_battery_capacity.value = ''
+          form.n_color.value = ''
+        }
+        if (data.error) {
+          errorDiv.classList.remove('d-none')
+          console.log(data.message)
+          errorDiv.textContent = `ERROR: ${data.error.message}`
+          setTimeout(() => {
+            errorDiv.classList.add('d-none')
+          }, 2000);
+        }
+      } catch (err) {
+          console.log(err);
+      }
+    })
+
+  </script>
+</body>
+</html>

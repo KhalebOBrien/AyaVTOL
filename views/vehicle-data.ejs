@@ -18,13 +18,16 @@
     <%- include('./partials/__topbar.ejs') %>
 
     <div class="dash-content">
-      <div class="mt-5 mb-5">
-        <div class="tile">
+      <div class="mt-5 mb-5 d-block">
+        <div class="title d-inline">
           <i class="uil uil-plane"></i>
           <span class="text" id="vehicle-title">Manage eVTOL <%= vehicle.serial_number %></span>
         </div>
-        <div class="float-end">
-          <div class="dropdown">
+        <div class="float-end d-inline">
+          <a href="/evtol/<%= vehicle._id %>/load" class="btn btn-secondary">
+            <i class="uil uil-upload-alt"></i> Load eVTOL
+          </a>
+          <div class="dropdown d-inline">
             <button class="btn btn-secondary dropdown-toggle" data-bs-toggle="modal" data-bs-target="#addVehicleModal">
               <i class="uil uil-edit"></i> Update eVTOL
             </button>
@@ -48,6 +51,39 @@
         <div class="row g-3" id="vehicleList">
         </div>
       </div>
+
+
+      <!-- <div>
+        <ul class="nav nav-pills nav-fill" role="tablist">
+          <li class="nav-item">
+            <a class="nav-link active" id="current-loads-tab" aria-current="page" data-bs-toggle="tab" role="tab" aria-controls="current_loads" aria-selected="true" href="#current_loads">Current Loads</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="delivery-history-tab" aria-current="page" data-bs-toggle="tab" role="tab" aria-controls="delivery_history" aria-selected="false" href="#delivery_history">Load Delivery History</a>
+          </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+          <div class="tab-pane fade show active" id="current_loads" role="tabpanel" aria-labelledby="current-loads-tab">
+            <table id="itemsTable">
+              <thead>
+                <tr>
+                  <th>Images</th>
+                  <th>Name of Item</th>
+                  <th>Unique Code</th>
+                  <th>Load Type</th>
+                  <th>Item Net Weight</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+              </tbody>
+            </table>
+          </div>
+          <div class="tab-pane fade show active" id="delivery_history" role="tabpanel" aria-labelledby="delivery-history-tab">
+            This is the next tab
+          </div>
+        </div>
+      </div> -->
     </div>
   </section>
 
