@@ -31,3 +31,7 @@ export const loadEvtolView = async (req, res) => {
   
   return res.render('load-vehicle', { project_name: process.env.APP_NAME, vehicle, loadTypes: ELoadType })
 }
+
+export const deliveryHistoryView = async (req, res) => {
+  return res.render('delivery-history', { project_name: process.env.APP_NAME })
+}

@@ -24,6 +24,10 @@ const loadSchema = new mongoose.Schema(
         type: String,
       }
     ],
+    owner: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'users',
+    },
   },
   {
     timestamps: {
