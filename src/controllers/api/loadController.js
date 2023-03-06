@@ -6,6 +6,8 @@ export const createLoad = async (req, res) => {
   const { serial_number, model, current_state, max_weight, battery_capacity, color } = req.body
 
   try {
+    // check the state of the evtol, should be idle or being loaded by current user
+     
     const load = await Load.create({
       serial_number,
       model,

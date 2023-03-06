@@ -16,7 +16,7 @@ const deliverySchema = new mongoose.Schema(
         ref: 'loads',
       },
     ],
-    Origin: {
+    origin: {
       type: String,
       required: [true, 'Please enter a origin.'],
     },
